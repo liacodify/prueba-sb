@@ -36,7 +36,7 @@ npm run dev
 
 ### Rápido (recomendado)
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 ### Paso a paso
