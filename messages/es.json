@@ -1,0 +1,146 @@
+{
+	"common": {
+		"appName": "Gestor de Solicitudes",
+		"loading": "Cargando...",
+		"error": "Algo salió mal",
+		"retry": "Reintentar",
+		"save": "Guardar",
+		"cancel": "Cancelar",
+		"delete": "Eliminar",
+		"edit": "Editar",
+		"create": "Crear",
+		"search": "Buscar",
+		"filter": "Filtrar",
+		"clear": "Limpiar",
+		"apply": "Aplicar",
+		"back": "Volver",
+		"confirm": "Confirmar",
+		"yes": "Sí",
+		"no": "No",
+		"actions": "Acciones",
+		"noResults": "No se encontraron resultados",
+		"required": "Este campo es requerido"
+	},
+	"dashboard": {
+		"title": "Panel de Control",
+		"subtitle": "Resumen de solicitudes",
+		"total": "Total",
+		"pending": "Pendientes",
+		"inReview": "En Revisión",
+		"approved": "Aprobadas",
+		"rejected": "Rechazadas",
+		"closed": "Cerradas",
+		"viewAll": "Ver todas",
+		"viewAllSolicitudes": "Ver todas las solicitudes",
+		"createFirst": "Crear primera solicitud",
+		"recentSolicitudes": "Solicitudes Recientes",
+		"quickActions": "Acciones Rápidas",
+		"statistics": "Estadísticas",
+		"approvalRate": "Tasa de aprobación",
+		"rejectionRate": "Tasa de rechazo",
+		"inProcess": "En proceso",
+		"noRecent": "No hay solicitudes recientes"
+	},
+	"solicitudes": {
+		"title": "Solicitudes",
+		"subtitle": "Gestiona las solicitudes de tu organización",
+		"create": "Crear Solicitud",
+		"new": "Nueva Solicitud",
+		"newTitle": "Crear Nueva Solicitud",
+		"newDescription": "Crear una nueva solicitud",
+		"editTitle": "Editar Solicitud",
+		"detailTitle": "Detalle de Solicitud",
+		"listTitle": "Bandeja de Solicitudes",
+		"empty": "No hay solicitudes",
+		"emptyDescription": "Aún no se han creado solicitudes. ¡Crea la primera!",
+		"notFound": "Solicitud no encontrada",
+		"searchPlaceholder": "Buscar por título, descripción o solicitante...",
+		"filters": {
+			"status": "Estado",
+			"priority": "Prioridad",
+			"category": "Categoría",
+			"all": "Todos",
+			"search": "Buscar por título o solicitante...",
+			"clear": "Limpiar",
+			"results": "resultados"
+		},
+		"columns": {
+			"title": "Título",
+			"requester": "Solicitante",
+			"category": "Categoría",
+			"priority": "Prioridad",
+			"status": "Estado",
+			"creationDate": "Fecha de Creación",
+			"lastChange": "Última Actualización",
+			"actions": "Acciones"
+		},
+		"form": {
+			"title": "Título",
+			"titlePlaceholder": "Ingrese el título de la solicitud",
+			"description": "Descripción",
+			"descriptionPlaceholder": "Describa detalladamente su solicitud",
+			"requester": "Solicitante",
+			"requesterPlaceholder": "Nombre del solicitante",
+			"category": "Categoría",
+			"selectCategory": "Seleccione una categoría",
+			"priority": "Prioridad",
+			"selectPriority": "Seleccione la prioridad",
+			"status": "Estado",
+			"selectStatus": "Seleccione el estado"
+		},
+		"categories": {
+			"hardware": "Hardware",
+			"software": "Software",
+			"network": "Red",
+			"access": "Acceso",
+			"other": "Otro"
+		},
+		"priorities": {
+			"low": "Baja",
+			"medium": "Media",
+			"high": "Alta",
+			"critical": "Crítica"
+		},
+		"statuses": {
+			"pending": "Pendiente",
+			"in_review": "En Revisión",
+			"approved": "Aprobada",
+			"rejected": "Rechazada",
+			"closed": "Cerrada"
+		},
+		"actions": {
+			"review": "Revisar",
+			"approve": "Aprobar",
+			"reject": "Rechazar",
+			"close": "Cerrar",
+			"reopen": "Reabrir",
+			"toReview": "Mover a Revisión",
+			"edit": "Editar",
+			"delete": "Eliminar"
+		},
+		"messages": {
+			"created": "Solicitud creada exitosamente",
+			"updated": "Solicitud actualizada exitosamente",
+			"deleted": "Solicitud eliminada exitosamente",
+			"error": "Error al procesar la solicitud"
+		},
+		"deleteConfirm": {
+			"title": "¿Eliminar Solicitud?",
+			"description": "Esta acción no se puede deshacer. ¿Está seguro de que desea eliminar esta solicitud?"
+		}
+	},
+	"pagination": {
+		"page": "Página",
+		"of": "de"
+	},
+	"accessibility": {
+		"skipToContent": "Saltar al contenido principal",
+		"openMenu": "Abrir menú de navegación",
+		"closeMenu": "Cerrar menú de navegación",
+		"toggleTheme": "Cambiar tema",
+		"previousPage": "Página anterior",
+		"nextPage": "Página siguiente",
+		"sortAscending": "Ordenar ascendentemente",
+		"sortDescending": "Ordenar descendentemente"
+	}
+}
