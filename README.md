@@ -19,9 +19,18 @@ Next.js 16 + React 19 + TypeScript + Tailwind CSS + TanStack Query + shadcn/ui
 ## Setup
 
 ```bash
+nvm use
+```
+
+```bash
 npm install
+```
+
+```bash
 npm run dev
 ```
+
+**Node.js 20+** | **npm 10+**
 
 ## Docker
 
