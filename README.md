@@ -20,6 +20,19 @@ Sistema web para gestionar solicitudes internas con tablero Kanban visual para r
 - **Node.js** 20 o superior
 - **Docker** (opcional, para despliegue)
 
+## Docker
+
+```bash
+# Construir imagen
+docker build -t gestor-solicitudes .
+
+# Ejecutar contenedor
+docker run -p 3000:3000 gestor-solicitudes
+
+# O usar docker-compose
+docker-compose up
+```
+
 ## Instalación y Ejecución
 
 ```bash
@@ -45,11 +58,15 @@ La aplicación estará disponible en http://localhost:3000
 | `npm run dev` | Servidor de desarrollo con hot reload |
 | `npm run build` | Construir aplicación para producción |
 | `npm start` | Ejecutar versión de producción |
+| `npm run lint` | Verificar código con Biome |
+| `npm run lint:fix` | Verificar y corregir código automáticamente |
+| `npm run typecheck` | Verificar tipos TypeScript |
 | `npm test` | Ejecutar pruebas unitarias (Jest) |
+| `npm run test:watch` | Ejecutar pruebas en modo watch |
+| `npm run test:coverage` | Ejecutar pruebas con cobertura |
 | `npm run cypress` | Abrir Cypress para pruebas E2E |
 | `npm run cypress:run` | Ejecutar pruebas E2E en terminal |
-| `npm run lint` | Verificar código con ESLint |
-| `npm run typecheck` | Verificar tipos TypeScript |
+| `npm run ci` | Ejecutar lint, typecheck, test y build |
 
 ## Arquitectura
 
@@ -175,19 +192,6 @@ Flujos cubiertos:
 - ✅ i18n (español/inglés)
 - ✅ Accesibilidad (ARIA, skip nav)
 - ✅ Pruebas unitarias y E2E
-
-## Docker
-
-```bash
-# Construir imagen
-docker build -t gestor-solicitudes .
-
-# Ejecutar contenedor
-docker run -p 3000:3000 gestor-solicitudes
-
-# O usar docker-compose
-docker-compose up
-```
 
 ## Mejoras Futuras
 
