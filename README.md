@@ -4,7 +4,7 @@ Sistema web para gestionar solicitudes internas con tablero Kanban visual para r
 
 ## Demo
 
-- **Aplicación**: http://localhost:3000
+- **Aplicación**: https://prueba-sb.vercel.app/
 - **Diseño Figma**: [![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=figma&logoColor=white)](https://www.figma.com/design/EKc8yfBmBXWM7ugA0aS5HM/gestion-de-solicitudes?node-id=0-1&t=N3IIqtet26S1x4v7-1)
 
 ## Capturas
