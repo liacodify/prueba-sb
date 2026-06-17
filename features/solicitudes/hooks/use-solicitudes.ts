@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { solicitudesApi } from "@/services/api-client";
 import type {
 	CreateSolicitudDTO,
@@ -10,21 +9,6 @@ import type {
 	UpdateSolicitudDTO,
 	Solicitud,
 } from "@/types";
-
-const statusLabels: Record<Status, string> = {
-	pending: "Pendiente",
-	in_review: "En Revisión",
-	approved: "Aprobada",
-	rejected: "Rechazada",
-	closed: "Cerrada",
-};
-
-const priorityLabels: Record<Priority, string> = {
-	low: "Baja",
-	medium: "Media",
-	high: "Alta",
-	critical: "Crítica",
-};
 
 export const queryKeys = {
 	solicitudes: {
@@ -75,13 +59,11 @@ export function useCreateSolicitud() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
-			toast.success("Solicitud creada exitosamente");
 		},
 		onError: (_err, _data, context) => {
 			if (context?.previousData) {
 				queryClient.setQueryData(queryKeys.solicitudes.all, context.previousData);
 			}
-			toast.error("Error al crear la solicitud");
 		},
 	});
 }
@@ -111,21 +93,13 @@ export function usePatchSolicitud() {
 
 			return { previousData };
 		},
-		onSuccess: (_, variables) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
-			if (variables.data.status) {
-				toast.success(`Estado cambiado a ${statusLabels[variables.data.status]}`);
-			} else if (variables.data.priority) {
-				toast.success(`Prioridad cambiada a ${priorityLabels[variables.data.priority]}`);
-			} else {
-				toast.success("Solicitud actualizada");
-			}
 		},
 		onError: (_err, _vars, context) => {
 			if (context?.previousData) {
 				queryClient.setQueryData(queryKeys.solicitudes.all, context.previousData);
 			}
-			toast.error("Error al actualizar la solicitud");
 		},
 	});
 }
@@ -157,13 +131,11 @@ export function useUpdateSolicitud() {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
-			toast.success("Solicitud actualizada");
 		},
 		onError: (_err, _vars, context) => {
 			if (context?.previousData) {
 				queryClient.setQueryData(queryKeys.solicitudes.all, context.previousData);
 			}
-			toast.error("Error al actualizar la solicitud");
 		},
 	});
 }
@@ -188,17 +160,15 @@ export function useDeleteSolicitud() {
 				},
 			);
 
-			return { previousData };
+			return { previousData, id };
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
-			toast.success("Solicitud eliminada");
 		},
 		onError: (_err, _id, context) => {
 			if (context?.previousData) {
 				queryClient.setQueryData(queryKeys.solicitudes.all, context.previousData);
 			}
-			toast.error("Error al eliminar la solicitud");
 		},
 	});
 }

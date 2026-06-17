@@ -7,6 +7,7 @@ import { ArrowRight, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+
 import { PriorityBadge } from "@/components/shared/PriorityBadge";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,7 @@ import {
 import type { CreateSolicitudFormData } from "@/features/solicitudes/schemas/solicitud.schema";
 import { createSolicitudSchema } from "@/features/solicitudes/schemas/solicitud.schema";
 import { useTranslations } from "@/lib/use-translations";
-import type { Solicitud, Status } from "@/types";
+import type { Priority, Solicitud, Status } from "@/types";
 
 interface SolicitudModalProps {
 	open: boolean;
@@ -48,6 +49,21 @@ const NEXT_STATUSES: Record<Status, Status[]> = {
 	approved: ["closed"],
 	rejected: ["in_review"],
 	closed: ["in_review"],
+};
+
+const statusLabels: Record<Status, string> = {
+	pending: "Pendiente",
+	in_review: "En Revisión",
+	approved: "Aprobada",
+	rejected: "Rechazada",
+	closed: "Cerrada",
+};
+
+const priorityLabels: Record<Priority, string> = {
+	low: "Baja",
+	medium: "Media",
+	high: "Alta",
+	critical: "Crítica",
 };
 
 export function SolicitudModal({
@@ -101,6 +117,7 @@ export function SolicitudModal({
 				id: currentSolicitud.id,
 				data: { status: newStatus },
 			});
+			toast.success(`Estado cambiado a ${statusLabels[newStatus]}`);
 			setCurrentSolicitud(updated);
 			onStatusChange?.(updated);
 			onOpenChange(false);
@@ -113,6 +130,7 @@ export function SolicitudModal({
 		if (!currentSolicitud) return;
 		try {
 			await deleteMutation.mutateAsync(currentSolicitud.id);
+			toast.success("Solicitud eliminada");
 			onOpenChange(false);
 		} catch {
 			toast.error("Error al eliminar");
@@ -131,6 +149,7 @@ export function SolicitudModal({
 				id: currentSolicitud.id,
 				data,
 			});
+			toast.success("Solicitud actualizada");
 			setCurrentSolicitud(updated);
 			setIsEditing(false);
 			onOpenChange(false);
@@ -300,7 +319,7 @@ export function SolicitudModal({
 						</div>
 						<div>
 							<p className="text-sm font-medium text-muted-foreground">
-								Fecha de creaci\u00f3n
+								Fecha de creación
 							</p>
 							<p>
 								{format(
@@ -312,7 +331,7 @@ export function SolicitudModal({
 						</div>
 						<div>
 							<p className="text-sm font-medium text-muted-foreground">
-								\u00daltima actualizaci\u00f3n
+								Última actualización
 							</p>
 							<p>
 								{format(
