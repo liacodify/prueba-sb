@@ -21,20 +21,22 @@ export default function SolicitudesPage() {
 	}, []);
 
 	const handleStatusChange = useCallback(
-		async (id: string, status: Status) => {
+		(id: string, status: Status) => {
 			patchMutation.mutate({ id, data: { status } });
 		},
 		[patchMutation],
 	);
 
 	const handleDelete = useCallback(
-		async (id: string) => {
+		(id: string) => {
 			deleteMutation.mutate(id);
 		},
 		[deleteMutation],
 	);
 
-	const handleCreate = useCallback(() => {}, []);
+	const handleCreate = useCallback(() => {
+		refetch();
+	}, [refetch]);
 
 	if (!mounted) {
 		return (
@@ -51,13 +53,11 @@ export default function SolicitudesPage() {
 	return (
 		<div className="h-full min-h-0">
 			<KanbanBoard
-				solicitudes={data?.data || []}
+				initialSolicitudes={data?.data || []}
 				onStatusChange={handleStatusChange}
 				onDelete={handleDelete}
 				onCreate={handleCreate}
-				isLoading={
-					isLoading || patchMutation.isPending || deleteMutation.isPending
-				}
+				isLoading={isLoading}
 			/>
 		</div>
 	);

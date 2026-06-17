@@ -25,7 +25,7 @@ const STATUSES: Status[] = [
 ];
 
 interface KanbanBoardProps {
-	solicitudes: Solicitud[];
+	initialSolicitudes: Solicitud[];
 	onStatusChange: (id: string, status: Status) => void;
 	onDelete: (id: string) => void;
 	onCreate: () => void;
@@ -33,13 +33,14 @@ interface KanbanBoardProps {
 }
 
 export function KanbanBoard({
-	solicitudes,
+	initialSolicitudes,
 	onStatusChange,
 	onDelete,
 	onCreate,
 	isLoading,
 }: KanbanBoardProps) {
 	const { t } = useTranslations();
+	const [solicitudes, setSolicitudes] = useState(initialSolicitudes);
 	const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
 	const [isDetailOpen, setIsDetailOpen] = useState(false);
 	const [isEditOpen, setIsEditOpen] = useState(false);
@@ -58,11 +59,23 @@ export function KanbanBoard({
 		hasActiveFilters,
 		clearFilters,
 		resultCount,
-	} = useFilters({ solicitudes });
+	} = useFilters({ solicitudes: initialSolicitudes });
 
 	const handleCardClick = (solicitud: Solicitud) => {
 		setSelectedSolicitud(solicitud);
 		setIsDetailOpen(true);
+	};
+
+	const handleStatusChange = (id: string, newStatus: Status) => {
+		setSolicitudes((prev) =>
+			prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)),
+		);
+		onStatusChange(id, newStatus);
+	};
+
+	const handleDelete = (id: string) => {
+		setSolicitudes((prev) => prev.filter((s) => s.id !== id));
+		onDelete(id);
 	};
 
 	const getSolicitudesByStatus = (status: Status) => {
@@ -142,7 +155,6 @@ export function KanbanBoard({
 			<div className="hidden lg:flex gap-4 flex-1 overflow-x-auto px-4">
 				{STATUSES.map((status) => {
 					const columnSolicitudes = getSolicitudesByStatus(status);
-					const isEmpty = columnSolicitudes.length === 0;
 
 					return (
 						<KanbanColumn
@@ -156,7 +168,7 @@ export function KanbanBoard({
 									solicitud={solicitud}
 									onClick={() => handleCardClick(solicitud)}
 									onStatusChange={(newStatus) =>
-										onStatusChange(solicitud.id, newStatus)
+										handleStatusChange(solicitud.id, newStatus)
 									}
 									isLoading={isLoading}
 								/>
@@ -172,7 +184,7 @@ export function KanbanBoard({
 					activeTab={activeTab}
 					onTabChange={setActiveTab}
 					onCardClick={handleCardClick}
-					onStatusChange={onStatusChange}
+					onStatusChange={handleStatusChange}
 					onCreateClick={() => setIsCreateOpen(true)}
 					isLoading={isLoading}
 				/>
@@ -183,11 +195,11 @@ export function KanbanBoard({
 				onOpenChange={setIsDetailOpen}
 				solicitud={selectedSolicitud}
 				onDelete={(id) => {
-					onDelete(id);
+					handleDelete(id);
 					setIsDetailOpen(false);
 				}}
 				onStatusChange={(solicitud) => {
-					onStatusChange(solicitud.id, solicitud.status);
+					handleStatusChange(solicitud.id, solicitud.status);
 				}}
 			/>
 
