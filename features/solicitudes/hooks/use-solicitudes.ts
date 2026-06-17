@@ -50,13 +50,7 @@ export function useCreateSolicitud() {
 
 	return useMutation({
 		mutationFn: (data: CreateSolicitudDTO) => solicitudesApi.create(data),
-		onMutate: async () => {
-			await queryClient.cancelQueries({ queryKey: queryKeys.solicitudes.all });
-		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
-		},
-		onError: () => {
 			queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
 		},
 	});
@@ -71,6 +65,10 @@ export function usePatchSolicitud() {
 		onMutate: async ({ id, data }) => {
 			await queryClient.cancelQueries({ queryKey: queryKeys.solicitudes.all });
 
+			const previousData = queryClient.getQueriesData({
+				queryKey: ["solicitudes", "list"],
+			});
+
 			queryClient.setQueriesData(
 				{ queryKey: ["solicitudes", "list"] },
 				(old: { data: Solicitud[] } | undefined) => {
@@ -84,22 +82,13 @@ export function usePatchSolicitud() {
 				},
 			);
 
-			return { id, data };
+			return { previousData };
 		},
 		onError: (_err, _vars, context) => {
-			if (context?.id && context?.data) {
-				queryClient.setQueriesData(
-					{ queryKey: ["solicitudes", "list"] },
-					(old: { data: Solicitud[] } | undefined) => {
-						if (!old?.data) return old;
-						return {
-							...old,
-							data: old.data.map((s) =>
-								s.id === context.id ? { ...s, ...context.data } : s,
-							),
-						};
-					},
-				);
+			if (context?.previousData) {
+				for (const [key, value] of context.previousData) {
+					queryClient.setQueryData(key, value);
+				}
 			}
 		},
 	});
@@ -114,6 +103,10 @@ export function useUpdateSolicitud() {
 		onMutate: async ({ id, data }) => {
 			await queryClient.cancelQueries({ queryKey: queryKeys.solicitudes.all });
 
+			const previousData = queryClient.getQueriesData({
+				queryKey: ["solicitudes", "list"],
+			});
+
 			queryClient.setQueriesData(
 				{ queryKey: ["solicitudes", "list"] },
 				(old: { data: Solicitud[] } | undefined) => {
@@ -127,22 +120,13 @@ export function useUpdateSolicitud() {
 				},
 			);
 
-			return { id, data };
+			return { previousData };
 		},
 		onError: (_err, _vars, context) => {
-			if (context?.id && context?.data) {
-				queryClient.setQueriesData(
-					{ queryKey: ["solicitudes", "list"] },
-					(old: { data: Solicitud[] } | undefined) => {
-						if (!old?.data) return old;
-						return {
-							...old,
-							data: old.data.map((s) =>
-								s.id === context.id ? { ...s, ...context.data } : s,
-							),
-						};
-					},
-				);
+			if (context?.previousData) {
+				for (const [key, value] of context.previousData) {
+					queryClient.setQueryData(key, value);
+				}
 			}
 		},
 	});
@@ -156,6 +140,10 @@ export function useDeleteSolicitud() {
 		onMutate: async (id) => {
 			await queryClient.cancelQueries({ queryKey: queryKeys.solicitudes.all });
 
+			const previousData = queryClient.getQueriesData({
+				queryKey: ["solicitudes", "list"],
+			});
+
 			queryClient.setQueriesData(
 				{ queryKey: ["solicitudes", "list"] },
 				(old: { data: Solicitud[] } | undefined) => {
@@ -167,11 +155,13 @@ export function useDeleteSolicitud() {
 				},
 			);
 
-			return { id };
+			return { previousData };
 		},
 		onError: (_err, _id, context) => {
-			if (context?.id) {
-				queryClient.invalidateQueries({ queryKey: queryKeys.solicitudes.all });
+			if (context?.previousData) {
+				for (const [key, value] of context.previousData) {
+					queryClient.setQueryData(key, value);
+				}
 			}
 		},
 	});
